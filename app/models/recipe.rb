@@ -2,12 +2,11 @@ class Recipe < ApplicationRecord
   belongs_to :user, foreign_key: 'user_id'
   has_many :recipe_foods, dependent: :destroy
 
-  attribute :name :text
-  attribute :preparation_time :integer
-  attribute :cooking_time :integer
-  attribute :description :text
-  attribute :public :text
-
+  attribute :name, :text
+  attribute :preparation_time, :integer
+  attribute :cooking_time, :integer
+  attribute :description, :text
+  attribute :public, :text
 
   validates :name, presence: true, length: { maximum: 250 }
   validates :description, presence: true
