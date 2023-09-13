@@ -3,4 +3,5 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "jquery3";
 import "popper";
+
 import "bootstrap";

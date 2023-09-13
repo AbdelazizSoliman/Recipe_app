@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  resources :foods, only: [:index, :new, :create]
+  delete 'foods/:id', to: 'foods#delete', as: 'delete_food'
+
 
   root 'pages#home'
   resources :users, only: [:show, :edit]
