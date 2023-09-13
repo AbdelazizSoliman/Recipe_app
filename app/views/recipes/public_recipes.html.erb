@@ -1,0 +1,17 @@
+<%= render partial: "shared/navbar"%>
+
+
+<div class="container-fluid">
+
+<h2>Public Recipes</h2>
+
+<div class="container">
+    <% if @public_recipes.nil? %>
+    <h3>No Recipe Found</h3>
+    <% else %>
+    <% @public_recipes.each do |public_recipe| %>
+        <%= render partial: 'shared/public_recipes_card', locals: { public_recipe: public_recipe } %>
+    <% end %>
+    <% end %>
+</div>
+</div>
