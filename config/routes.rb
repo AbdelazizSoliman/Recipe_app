@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get '/public_recipes', to: 'recipes#public_recipes'
-  delete '/recipes/:id/:food_id', to: 'recipes#remove_food_from_recipe', as: 'recipe_food'
+  # delete '/recipes/:id/:food_id', to: 'recipes#remove_food_from_recipe', as: 'recipe_food'
 
   resources :foods, only: [:index, :new, :create]
       delete 'foods/:id', to: 'foods#destroy', as: 'delete_food'
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
         get 'add_ingredient', to: 'recipes#add_ingredient'
         post 'add_ingredient', to: 'recipes#add_ingredient'
         get 'generate_shopping_list', to: 'recipes#generate_shopping_list'
-        delete 'remove_food'
+        delete 'remove', to: 'recipes#destroy', as: 'remove'
     end
   end
   

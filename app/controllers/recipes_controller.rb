@@ -60,9 +60,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    if @recipe.user == current_user
-      @recipe.recipe_foods.destroy_all
-
+    if current_user == @recipe.user
       @recipe.destroy
       flash[:notice] = 'Recipe deleted successfully.'
     else
@@ -70,6 +68,7 @@ class RecipesController < ApplicationController
     end
     redirect_to recipes_path
   end
+  
 
   def show
     @recipe = Recipe.find(params[:id])
