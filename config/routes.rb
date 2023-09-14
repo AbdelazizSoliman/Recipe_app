@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   delete 'foods/:id', to: 'foods#delete', as: 'delete_food'
 
 
-  root 'pages#home'
+  root 'foods#index'
   resources :users, only: [:show, :edit]
 
 

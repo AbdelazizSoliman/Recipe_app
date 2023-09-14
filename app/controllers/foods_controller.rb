@@ -1,6 +1,6 @@
 class FoodsController < ApplicationController
   def index
-    @foods = Food.all
+    @foods = Food.where({ user_id: current_user.id })
   end
 
   def new
@@ -8,13 +8,13 @@ class FoodsController < ApplicationController
   end
 
   def create
-    @food = Food.new(food_params)
+    Food.includes(:recipe_foods).where({ user_id: current_user.id })
 
     name = food_params[:name]
     measurement_unit = food_params[:measurement_unit]
     quantity = food_params[:quantity]
     price = food_params[:price]
-    food = Food.new(name:, measurement_unit:, price:, quantity:)
+    food = Food.new(user_id: current_user.id, name:, measurement_unit:, price:, quantity:)
 
     if food.save
       redirect_to foods_path, notice: 'Food created successfully!'

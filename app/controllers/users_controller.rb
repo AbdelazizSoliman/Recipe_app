@@ -6,6 +6,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    # @user = User.find_by(id: params[:id])
+    # Redirect to another page
   end
 end
