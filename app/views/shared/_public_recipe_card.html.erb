@@ -1,0 +1,18 @@
+<div class="border-2 border-black flex p-[3%] justify-between md:w-[60%] mx-auto relative min-h-[140px]">
+  <div>
+    <h2 class="font-extrabold"><%= public_recipe.name %></h2>
+    <p>by<br> <span><%= @users.find_by(id: public_recipe.user_id).name %></span></p>
+  </div>
+  <div>
+    <p>Total food items: <span class="font-extrabold"><%= public_recipe.recipe_foods.count %></span></p>
+    <p>Total price:
+      <% total_price = 0 %>
+      <% public_recipe.recipe_foods.each do |recipe_foods|  %>
+        <% total_price += recipe_foods.quantity * @foods.find_by(id: recipe_foods.food_id).price %>
+      <% end %>
+      <span class="font-extrabold">$<%= total_price %></span>
+    </p>
+  </div>
+  <a href="<%= user_recipe_path(@users.find_by(id: public_recipe.user_id), public_recipe.id) %>" class="text-white absolute h-7 md:right-[2%] bottom-1 left-[2%] md:left-auto bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 mt-5 pt-1">Details</a>
+
+</div>
