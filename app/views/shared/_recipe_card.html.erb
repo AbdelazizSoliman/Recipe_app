@@ -1,7 +1,8 @@
 <div class="border-2 border-black flex gap-[5%] p-[3%] relative min-h-[140px]">
     <div>
       <h2 class="text-xl font-extrabold"><%= recipe.name %></h2>
-     <% if recipe.user == current_user %>
+       <% if recipe.user == current_user 
+    #  <%# <% if can? :destroy, recipe %> 
       <%= link_to 'REMOVE', recipe_path(recipe.id), class: "font-medium text-blue-600 underline hover:no-underline", data: { "turbo-method": :delete } %>
       <% end %>
 

@@ -34,23 +34,7 @@
       <th>Action</th> <!-- Add an Action column -->
     </tr>
   </thead>
-  <tbody>
-    <% @recipe.foods.each do |food| %>
-      <tr>
-        <td><%= food.name %></td>
-        <td><%= food.quantity %></td>
-        <td><%= food.measurement_unit %></td>
-        <td><%= number_to_currency(food.price) %></td>
-        <td>
-          <% if current_user == @recipe.user %>
-            <%= form_tag(remove_food_recipe_path(@recipe, food_id: food.id), method: :delete) do %>
-            <%= submit_tag 'Remove Food', class: 'btn btn-danger btn-sm' %>
-            <% end %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+
 </table>
 </div>
 <%= link_to 'Back to Recipes', recipes_path %>
