@@ -1,0 +1,37 @@
+<h2>Create a New Recipe</h2>
+
+<%= form_with(model: @recipe, local: true) do |form| %>
+  <!-- Name Field -->
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <!-- Preparation Time Field -->
+  <div class="field">
+    <%= form.label :preparation_time %>
+    <%= form.number_field :preparation_time %>
+  </div>
+
+  <!-- Cooking Time Field -->
+  <div class="field">
+    <%= form.label :cooking_time %>
+    <%= form.number_field :cooking_time %>
+  </div>
+
+  <!-- Description Field -->
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <!-- Public Field (if it's a boolean) -->
+  <div class="field">
+    <%= form.label :public %>
+    <%= form.check_box :public %>
+  </div>
+
+  <%= form.submit 'Create Recipe', class: 'btn btn-primary' %>
+<% end %>
+
+<%= link_to 'Back to Recipes', recipes_path %>
