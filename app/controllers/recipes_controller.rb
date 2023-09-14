@@ -68,7 +68,6 @@ class RecipesController < ApplicationController
     end
     redirect_to recipes_path
   end
-  
 
   def show
     @recipe = Recipe.find(params[:id])
