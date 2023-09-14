@@ -35,7 +35,6 @@ class FoodsController < ApplicationController
     end
   end
 
-
   private
 
   def food_params
