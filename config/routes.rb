@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   get '/public_recipes', to: 'recipes#public_recipes'
   delete '/recipes/:id/:food_id', to: 'recipes#remove_food_from_recipe', as: 'recipe_food'
 
-  resources :foods, only: [:index, :new, :create, :destroy]
+  resources :foods, only: [:index, :new, :create]
+      delete 'foods/:id', to: 'foods#destroy', as: 'delete_food'
   
   resources :recipes, only: [:index, :new, :show, :create, :update, :destroy] do
     resources :recipe_foods, only: [:index, :show, :new, :create]

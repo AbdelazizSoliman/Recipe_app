@@ -1,44 +1,44 @@
 class FoodsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @foods = Food.where({ user_id: current_user.id })
+    @foods = current_user.foods.all
   end
 
   def new
+    @user = current_user
     @food = Food.new
   end
 
-  def create
-    Food.includes(:recipe_foods).where({ user_id: current_user.id })
-
-    name = food_params[:name]
-    measurement_unit = food_params[:measurement_unit]
-    quantity = food_params[:quantity]
-    price = food_params[:price]
-    food = Food.new(user_id: current_user.id, name:, measurement_unit:, price:, quantity:)
-
-    if food.save
-      redirect_to foods_path, notice: 'Food created successfully!'
-    else
-      render :new, notice: 'An error occured while creating a new food'
-    end
+  def show
+    @food = Food.find(params[:id])
   end
 
   def destroy
-    redirect_to root_path
-  end
-
-  def delete
+    puts 'Destroy action called'
     @food = Food.find(params[:id])
-    if @food.destroy
+    if @food.user == current_user
+      @food.destroy
       redirect_to foods_path, notice: 'Food deleted successfully!'
     else
-      redirect_to foods_path, alert: 'Unable to delete the food item.'
+      redirect_to foods_path, alert: 'You do not have permission to delete this food item.'
+    end
+  end
+
+  def create
+    @user = current_user
+    @food = current_user.foods.build(food_params)
+    @food.user_id = current_user.id
+    if @food.save
+      redirect_to foods_path(@user), notice: 'Food was successfully added.'
+    else
+      render :new
     end
   end
 
   private
 
   def food_params
-    params.require(:food).permit(:name, :measurement_unit, :price, :quantity)
+    params.require(:food).permit(:name, :measurement_unit, :price, :quantity, :user_id)
   end
 end
