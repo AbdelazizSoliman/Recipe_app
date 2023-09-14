@@ -20,6 +20,6 @@ Rails.application.routes.draw do
     end
   end
   
-  root 'foods#index'
+  root 'pages#home'
   resources :users, only: [:show, :edit]
 end
