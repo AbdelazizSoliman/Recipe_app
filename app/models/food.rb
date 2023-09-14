@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
   belongs_to :user, foreign_key: 'user_id'
-  belongs_to :recipe
+  # belongs_to :recipe
   has_many :recipe_foods, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }
