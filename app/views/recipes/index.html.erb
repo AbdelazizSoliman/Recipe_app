@@ -3,4 +3,5 @@
   <% @recipes.each do |recipe| %>
    <%= render partial: 'shared/recipe_card', locals: { recipe: recipe } %>
   <% end %>
+  <%= link_to 'New Recipe', new_recipe_path %>
 </div>
