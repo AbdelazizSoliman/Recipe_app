@@ -1,0 +1,32 @@
+<h2>Create a New Recipe</h2>
+
+<%= form_with(model: @recipe, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :preparation_time, class: 'form-label' %>
+    <%= form.number_field :preparation_time, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cooking_time, class: 'form-label' %>
+    <%= form.number_field :cooking_time, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :public, class: 'form-label' %>
+    <%= form.check_box :public, class: 'form-check-input' %>
+  </div>
+
+  <%= form.submit 'Create Recipe', class: 'btn btn-primary' %>
+<% end %>
+
+<%= link_to 'Back to Recipes', recipes_path %>
