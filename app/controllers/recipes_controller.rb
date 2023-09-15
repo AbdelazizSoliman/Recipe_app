@@ -2,11 +2,16 @@ class RecipesController < ApplicationController
   # before_action :authenticate_user!, except: [:show]
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.includes(:recipe_foods).where(user_id: current_user.id)
   end
 
   def new
     @recipe = Recipe.new
+  end
+
+  def show
+    @recipe = Recipe.includes(:recipe_foods).find(params[:id])
+    @recipe_foods = @recipe.recipe_foods
   end
 
   def add_ingredient
@@ -29,16 +34,10 @@ class RecipesController < ApplicationController
     render 'add_ingredient'
   end
 
-  def remove_food
-    @recipe = Recipe.find(params[:id])
-    @food = Food.find(params[:food_id])
-    if current_user == @recipe.user
-      @recipe.foods.delete(@food)
-      flash[:notice] = 'Ingredient removed successfully.'
-    else
-      flash[:alert] = 'You do not have permission to remove ingredients from this recipe.'
-    end
-    redirect_to @recipe
+  def remove_food_from_recipe
+    @recipe_food = RecipeFood.includes(:food).find_by(recipe_id: params[:id], food_id: params[:food_id])
+    @recipe_food.destroy
+    redirect_to recipe_path(params[:id])
   end
 
   def public_recipes
@@ -60,14 +59,13 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe = Recipe.find(params[:id])
-    if current_user == @recipe.user
-      @recipe.destroy
-      flash[:notice] = 'Recipe deleted successfully.'
+    @recipe = Recipe.includes(:recipe_foods).find(params[:id])
+    if @recipe.destroy
+      redirect_to recipes_path, notice: 'Recipe successfully deleted'
     else
-      flash[:alert] = 'You do not have permission to delete this recipe.'
+      redirect_to recipes_path, notice: 'Recipe could not be deleted'
     end
-    redirect_to recipes_path
+
   end
 
   def show
