@@ -21,22 +21,53 @@
 
   <h3>Required Food Items</h3>
   <div class="recipe-show-button-container">
-  <%= link_to 'Generate shopping list', shopping_list_path %>
-  <% if current_user == @recipe.user %>      
+   <%= link_to 'Generate shopping list', shopping_list_path %>
+    <% if current_user == @recipe.user %>      
       <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
     <% end %>
   </div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Measurement Unit</th>
-      <th>Price</th>
-      <th>Action</th> <!-- Add an Action column -->
-    </tr>
-  </thead>
 
-</table>
+    <table class="m-auto border border-slate-500">
+      <thead>
+        <tr>
+          <th class="border border-slate-600 p-4"> Food </th>
+          <th class="border border-slate-600 p-4"> Unit </th>
+          <th class="border border-slate-600 p-4"> Quantity </th>
+					<th class="border border-slate-600 p-4"> Unit Price </th>
+          <th class="border border-slate-600 p-4"> Total Price </th>
+					<% if !current_user.nil? && current_user.id == @recipe.user_id %>
+          	<th class="border border-slate-600 p-4"> Action </th>
+					<% end %>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% @recipe_foods.each do |recipe_food| %>
+					<tr>
+					<td class="text-center border border-slate-600 p-4" >
+						<%= recipe_food.food.name %>
+					</td>
+					<td class="text-center border border-slate-600 p-4" >
+						<%= recipe_food.food.measurement_unit %>
+					</td>
+						<td class="text-center border border-slate-600 p-4" >
+								<%= recipe_food.quantity %>
+						</td>
+							<td class="text-center border border-slate-600 p-4" >
+								$<%= recipe_food.food.price %>
+						</td>
+						<td class="text-center border border-slate-600 p-4" >
+								$<%= recipe_food.quantity.to_i * recipe_food.food.price.to_i %>
+						</td>
+						<% if !current_user.nil? && current_user.id == @recipe.user_id %>
+							<td class="border border-slate-600 p-4" >
+								<%= button_to "Remove", recipe_recipe_food_path(@recipe.id, recipe_food.id) , method: :delete, class: "text-sm text-indigo-600 hover:text-indigo-500 ml-2" %>
+							</td>
+						<% end %>
+						</tr>
+					<% end %>
+      </tbody>
+    </table>
 </div>
+
 <%= link_to 'Back to Recipes', recipes_path %>
