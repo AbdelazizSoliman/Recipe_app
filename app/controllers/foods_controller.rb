@@ -52,6 +52,7 @@ class FoodsController < ApplicationController
   end
 
   private
+
   def calculate_missing_food(food)
     missing_food = -food.quantity
     food.recipe_foods.each do |recipe_food|

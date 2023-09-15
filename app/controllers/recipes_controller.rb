@@ -9,11 +9,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new
   end
 
-  def show
-    @recipe = Recipe.includes(:recipe_foods).find(params[:id])
-    @recipe_foods = @recipe.recipe_foods
-  end
-
   def add_ingredient
     @recipe = Recipe.find(params[:id])
 
@@ -65,7 +60,6 @@ class RecipesController < ApplicationController
     else
       redirect_to recipes_path, notice: 'Recipe could not be deleted'
     end
-
   end
 
   def show
