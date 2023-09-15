@@ -1,22 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+  <%= link_to "RecipeApp", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="container">
-  <a class="navbar-brand">Recipes</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a href="<%= foods_path %>" class="nav-link">My Foods</a>
-      </li>
-      <li class="nav-item">
-        <a href=" <%= recipes_path %>" class="nav-link">My Recipes</a>
-      </li>
-      <li class="nav-item">
-      <a href=" <%= public_recipes_path %>" class="nav-link">Public Recipes</a>
-      </li>
-    </ul>
+         <li class="nav-item">
+        <%= link_to "foods", foods_path, class: "nav-link" %>
+        </li>
+
+         <li class="nav-item">
+        <%= link_to "Add Food", new_food_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+        <%= link_to "Recipes", recipes_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+        <%= link_to "Public Recipes", public_recipes_path, class: "nav-link" %>
+        </li>
+        
+          <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" %>
+        <% else %>
+
+        <li class="nav-item">
+          <%= link_to 'Sign In', new_user_session_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+         <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
+       </li>
+        <% end %>
+
+    </div>
   </div>
-</div>
 </nav>

@@ -25,11 +25,12 @@ class FoodsController < ApplicationController
     end
   end
 
-  # controllers/foods_controller.rb
   def create
+    @user = current_user
     @food = current_user.foods.build(food_params)
+    @food.user_id = current_user.id
     if @food.save
-      redirect_to foods_path, notice: 'Food was successfully added.'
+      redirect_to foods_path(@user), notice: 'Food was successfully added.'
     else
       render :new
     end

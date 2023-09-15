@@ -1,8 +1,8 @@
 class RecipesController < ApplicationController
-  # before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show]
 
   def index
-    @recipes = Recipe.all
+    @recipes = current_user.recipes.includes(:foods)
   end
 
   def new
@@ -60,7 +60,9 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    if current_user == @recipe.user
+    if @recipe.user == current_user
+      @recipe.recipe_foods.destroy_all
+
       @recipe.destroy
       flash[:notice] = 'Recipe deleted successfully.'
     else
