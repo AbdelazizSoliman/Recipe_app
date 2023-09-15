@@ -26,48 +26,47 @@
       <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
     <% end %>
   </div>
-
-    <table class="m-auto border border-slate-500">
-      <thead>
-        <tr>
-          <th class="border border-slate-600 p-4"> Food </th>
-          <th class="border border-slate-600 p-4"> Unit </th>
-          <th class="border border-slate-600 p-4"> Quantity </th>
-					<th class="border border-slate-600 p-4"> Unit Price </th>
-          <th class="border border-slate-600 p-4"> Total Price </th>
-					<% if !current_user.nil? && current_user.id == @recipe.user_id %>
-          	<th class="border border-slate-600 p-4"> Action </th>
-					<% end %>
-        </tr>
-      </thead>
-      <tbody>
-
-        <% @recipe_foods.each do |recipe_food| %>
-					<tr>
-					<td class="text-center border border-slate-600 p-4" >
-						<%= recipe_food.food.name %>
-					</td>
-					<td class="text-center border border-slate-600 p-4" >
-						<%= recipe_food.food.measurement_unit %>
-					</td>
-						<td class="text-center border border-slate-600 p-4" >
-								<%= recipe_food.quantity %>
-						</td>
-							<td class="text-center border border-slate-600 p-4" >
-								$<%= recipe_food.food.price %>
-						</td>
-						<td class="text-center border border-slate-600 p-4" >
-								$<%= recipe_food.quantity.to_i * recipe_food.food.price.to_i %>
-						</td>
-						<% if !current_user.nil? && current_user.id == @recipe.user_id %>
-							<td class="border border-slate-600 p-4" >
-								<%= button_to "Remove", recipe_recipe_food_path(@recipe.id, recipe_food.id) , method: :delete, class: "text-sm text-indigo-600 hover:text-indigo-500 ml-2" %>
-							</td>
-						<% end %>
+    
+     <% if @recipe.recipe_foods.any? %>
+        <table class="table table-striped table-bordered mt-2">
+					<thead>
+						<tr>
+						  <th scope="col">#</th>
+							<th scope="col">Food</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Value</th>
+							<th scope="col" class="text-center">Actions</th>
 						</tr>
-					<% end %>
-      </tbody>
-    </table>
+					</thead>
+					<tbody>
+            <% @recipe.recipe_foods.each_with_index do |food_recipe, index| %>
+              <tr>
+                <td><%= index + 1 %></td>										
+                <td><%=food_recipe.food.name %></td>
+                <td>
+                  <%= food_recipe.quantity.to_i %>
+                  <%= food_recipe.food.measurement_unit %>
+                </td>
+                <td>
+                  <% if food_recipe.quantity.present? && food_recipe.food.price.present? %>
+                      $<%= food_recipe.quantity * food_recipe.food.price %>
+                  <% else %>
+                    N/A
+                  <% end %>
+                </td>
+                <td class="d-flex justify-content-center justify-content-around">
+                  <% if can? :manage, @recipe %>
+                    <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, food_recipe), class: 'btn btn-danger btn-sm' %>
+                    <%= button_to "Remove", recipe_recipe_food_path(@recipe, food_recipe), class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
+                  <% else %>
+                    NA
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+			  </table>
+      <% end %>
 </div>
 
 <%= link_to 'Back to Recipes', recipes_path %>

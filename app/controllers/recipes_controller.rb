@@ -75,15 +75,20 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     @toggle_recipe_public = params[:toggle_recipe_public]
   
-    # Fetch associated recipe foods
-    @recipe_foods = @recipe.recipe_foods.includes(:food) # You may need to adjust this based on your data structure
+    # Ensure that the current user owns the recipe or it's public
+    if @recipe.user == current_user || @recipe.public
+      @recipe_foods = @recipe.recipe_foods.includes(:food)
+      return unless @toggle_recipe_public
   
-    return unless @toggle_recipe_public && @recipe.user == current_user
-  
-    @recipe.update(public: !@recipe.public)
-    flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
-    redirect_to recipe_path(@recipe)
+      @recipe.update(public: !@recipe.public)
+      flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
+      redirect_to recipe_path(@recipe)
+    else
+      flash[:alert] = 'You do not have permission to view this recipe.'
+      redirect_to recipes_path
+    end
   end
+  
 
   def toggle_recipe_public
     @recipe = Recipe.find(params[:id])

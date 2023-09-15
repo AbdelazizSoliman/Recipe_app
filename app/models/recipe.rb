@@ -1,8 +1,8 @@
 class Recipe < ApplicationRecord
   belongs_to :user, foreign_key: 'user_id'
   has_many :recipe_foods, dependent: :destroy
-  has_many :foods, through: :recipe_foods
-  attr_accessor :food_ids
+  has_and_belongs_to_many :foods, join_table: :recipe_foods
+  # attr_accessor :food_ids
 
   attribute :name, :text
   attribute :preparation_time, :integer
