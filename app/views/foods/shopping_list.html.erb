@@ -1,0 +1,19 @@
+<%= render partial: 'shared/navbar' %>
+<div class="md:w-[50%] mx-auto flex flex-col gap-5 items-center">
+    <h1 class="md:text-4xl text-2xl font-extrabold mx-auto">Shopping list</h1>
+
+    <div class="flex justify-between w-[90%] mt-5">
+        <p>Amount of food to buy: <span class="font-extrabold"><%= @shopping_list.length %></span></p>
+        <p>Total value of food needed: <span class="font-extrabold"><%= @total_price %></span></p>
+    </div>
+    <div class="grid grid-cols-3 grid-rows-1 grid-flow-row border-2 border-black w-[90%]">
+        <div class="font-extrabold bg-gray-400 border-r-2 border-black">Food</div>
+        <div class="font-extrabold bg-gray-400 border-r-2 border-black">Quantity</div>
+        <div class="font-extrabold bg-gray-400 border-r-2 border-black">Price</div>
+        <% @shopping_list.each do |shopping_list_item| %>
+          <div class="border-r-2 border-black"><%= shopping_list_item[:food] %></div>
+          <div class="border-r-2 border-black"><%= "#{shopping_list_item[:quantity]} #{shopping_list_item[:unit]}" %></div>
+          <div class="border-r-2 border-black"><%= "#{shopping_list_item[:unit_price] * shopping_list_item[:quantity]} $" %></div>
+        <% end %>
+    </div>
+</div>
