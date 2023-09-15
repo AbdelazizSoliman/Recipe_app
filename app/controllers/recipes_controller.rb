@@ -11,13 +11,22 @@ class RecipesController < ApplicationController
 
   def add_ingredient
     @recipe = Recipe.find(params[:id])
-
+  
     if current_user == @recipe.user
-      @foods_not_in_recipe = Food.where.not(id: @recipe.foods.pluck(:id))
-
+      # Fetch foods associated with the recipe through the join table
+      @foods_in_recipe = @recipe.recipe_foods.includes(food: :user).map(&:food)
+  
+      # Fetch foods not associated with the recipe
+      @foods_not_in_recipe = Food.where.not(id: @foods_in_recipe.map(&:id))
+  
       if params[:recipe].present? && params[:recipe][:food_ids].present?
         food_ids = params[:recipe][:food_ids].reject(&:empty?) # Remove empty strings
-        @recipe.foods << Food.where(id: food_ids)
+  
+        # Create new rows in the join table to associate selected foods with the recipe
+        food_ids.each do |food_id|
+          @recipe.recipe_foods.create(food_id: food_id)
+        end
+  
         flash[:notice] = 'Ingredients added successfully.'
         redirect_to @recipe
         return
@@ -25,7 +34,7 @@ class RecipesController < ApplicationController
     else
       flash[:alert] = 'You do not have permission to add ingredients to this recipe.'
     end
-
+  
     render 'add_ingredient'
   end
 
@@ -65,13 +74,21 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
     @toggle_recipe_public = params[:toggle_recipe_public]
-    return unless @toggle_recipe_public && @recipe.user == current_user
-
-    @recipe.update(public: !@recipe.public)
-    flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
-    redirect_to recipe_path(@recipe)
+  
+    # Ensure that the current user owns the recipe or it's public
+    if @recipe.user == current_user || @recipe.public
+      @recipe_foods = @recipe.recipe_foods.includes(:food)
+      return unless @toggle_recipe_public
+  
+      @recipe.update(public: !@recipe.public)
+      flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
+      redirect_to recipe_path(@recipe)
+    else
+      flash[:alert] = 'You do not have permission to view this recipe.'
+      redirect_to recipes_path
+    end
   end
-
+  
   def toggle_recipe_public
     @recipe = Recipe.find(params[:id])
 
