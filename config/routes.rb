@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get '/public_recipes', to: 'recipes#public_recipes'
-  # delete '/recipes/:id/:food_id', to: 'recipes#remove_food_from_recipe', as: 'recipe_food'
+  delete '/recipes/:id/:food_id', to: 'recipes#remove_food_from_recipe', as: 'recipe_food'
 
   resources :foods, only: [:index, :new, :create]
       delete 'foods/:id', to: 'foods#destroy', as: 'delete_food'
