@@ -1,4 +1,4 @@
-<h1>Public Recipes</h1>
+<%= render partial: 'shared/navbar' %>
 
 <div class="row">
   <% @public_recipes.each do |recipe| %>
@@ -7,12 +7,12 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h5 class="card-title"><%= recipe.name %></h5>
-              <p class="card-text">By: <%= recipe.user.name %></p>
+              <h5 class=""><%= recipe.name %></h5>
+              <p class="">By: <%= recipe.user.name %></p>
             </div>
-            <div class="col-md-6">
-              <p class="card-text">Total Food Items: <%= @total_food_items %></p>
-              <p class="card-text">Total Price: $<%= @total_price %></p>
+            <div class="col-6">
+              <p class="">Total Food Items: <%= @total_food_items %></p>
+              <p class="">Total Price: $<%= @total_price %></p>
               <a href="<%= recipe_path(recipe) %>" class="btn btn-primary">View Details</a>
             </div>
           </div>
