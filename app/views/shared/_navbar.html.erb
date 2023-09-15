@@ -4,30 +4,33 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+   <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav">
         <% if user_signed_in? %>          
           <li class="nav-item">
-            <a href="<%= foods_path %>" class="nav-link">My Foods</a>
+            <%= link_to "Foods", foods_path, class: "nav-link" %>
           </li>
+
           <li class="nav-item">
-            <a href="<%= recipes_path %>" class="nav-link">My Recipes</a>
+            <%= link_to "Recipes", recipes_path, class: "nav-link" %>
           </li>
+
           <li class="nav-item">
-            <a href="<%= public_recipes_path %>" class="nav-link">Public Recipes</a>
+            <%= link_to "Public Recipes", public_recipes_path, class: "nav-link" %>
           </li>
+
           <li class="nav-item">
-            <a href="<%= destroy_user_session_path %>" data-method="delete" class="nav-link">Sign Out</a>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "nav-link" %>
           </li>
+
         <% else %>
           <li class="nav-item">
-            <a href="<%= new_user_registration_path %>" class="nav-link">Sign Up</a>
+            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <a href="<%= new_user_session_path %>" class="nav-link">Sign In</a>
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
     </div>
-  </div>
 </nav>
