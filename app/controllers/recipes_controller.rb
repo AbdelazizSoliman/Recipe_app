@@ -89,7 +89,6 @@ class RecipesController < ApplicationController
     end
   end
   
-
   def toggle_recipe_public
     @recipe = Recipe.find(params[:id])
 
