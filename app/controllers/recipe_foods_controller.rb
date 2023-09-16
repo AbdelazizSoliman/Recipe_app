@@ -5,16 +5,6 @@ class RecipeFoodsController < ApplicationController
     @recipe_food = RecipeFood.new
   end
 
-  def create
-    @recipe = Recipe.find(params[:recipe_id])
-    @recipe_food = @recipe.recipe_foods.build(recipe_food_params)
-
-    if @recipe_food.save
-      redirect_to recipe_path(@recipe.id), notice: 'Food added to the recipe successfully.'
-    else
-      @foods = Food.all
-      render :new
-
   def index; end
 
   def show; end
