@@ -1,4 +1,24 @@
 
+<%= render partial: 'shared/navbar' %>
+
+<div class="recipe-show-page">
+  <div class="recipe-header">
+    <h2><%= @recipe.name %></h2>
+    <div class="top-line">
+      <p>Preparation Time: <%= @recipe.preparation_time %> minutes</p>
+      <p>
+        <% if current_user == @recipe.user %>
+          <% if @recipe.public %>
+            <%= link_to 'Make Private', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% else %>
+            <%= link_to 'Make Public', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% end %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <p>Cooking Time: <%= @recipe.cooking_time %> minutes</p>
+  <p>Description: <%= @recipe.description %></p>
   <h3>Required Food Items</h3>
   <div class="recipe-show-button-container">
   <%= link_to 'Generate shopping list', shopping_list_path %>
