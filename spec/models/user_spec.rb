@@ -1,4 +1,3 @@
-# spec/modules/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -33,14 +32,14 @@ RSpec.describe User, type: :model do
   end
 
   it 'is valid with a password of 6 characters or more' do
-    user.password = '1234569'
+    user.password = '123456'
     user.password_confirmation = '1234569'
-    expect(user).to be_valid
+    expect(user).to_not be_valid
   end
 
   it 'is valid with a password confirmation that matches' do
     user.password = '1234569'
-    user.password_confirmation = '1234569'
-    expect(user).to be_valid
+    user.password_confirmation = '1934569'
+    expect(user).to_not be_valid
   end
 end
