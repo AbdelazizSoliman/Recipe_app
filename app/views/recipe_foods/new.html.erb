@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-4 mt-5 p-2 border shadow-lg bg-white rounded">
+      <h4 class="text-center"><%= @recipe.name %></h4>
+      <h5 class="text-center">
+          Add Ingredient
+      </h5>
+
+      <% unless @foods.empty? %>
+        <%= render 'new' %>
+      <% else %>
+        <p class="text-center mt-4">
+          No foods available. Please add a food first. <br>
+          <%= link_to 'Add a Food', new_food_path, data: { turbo_frame: "remote_modal" } %>
+        </p>
+        <div class="actions text-end mt-4">
+          <%= link_to 'Cancel', recipe_path(@recipe), class: "btn btn-dark btn-sm px-3" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

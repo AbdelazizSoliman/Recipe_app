@@ -72,13 +72,14 @@
                   <%= food_recipe.quantity.to_i %>
                   <%= food_recipe.food.measurement_unit %>
                 </td>
-                <td>
-                  <% if food_recipe.quantity.present? && food_recipe.food.price.present? %>
-                      $<%= food_recipe.quantity * food_recipe.food.price %>
-                  <% else %>
-                    N/A
-                  <% end %>
-                </td>
+               <td>
+  <% if food_recipe.quantity.present? && food_recipe.food.price.present? %>
+    $<%= food_recipe.quantity.to_i * food_recipe.food.price %>
+  <% else %>
+    N/A
+  <% end %>
+</td>
+
                 <td class="d-flex justify-content-center justify-content-around">
                   <% if can? :manage, @recipe %>
                     <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, food_recipe), class: 'btn btn-danger btn-sm' %>
