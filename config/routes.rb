@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       
   
   resources :recipes, only: [:index, :new, :show, :create, :update, :destroy] do
-    resources :recipe_foods, only: [:index, :show, :new, :create]
+    resources :recipe_foods, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
       member do
         delete :destroy

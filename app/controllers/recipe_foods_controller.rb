@@ -3,12 +3,6 @@ class RecipeFoodsController < ApplicationController
 
   def show; end
 
-  def new
-    @recipe_food = RecipeFood.new
-    @recipe = Recipe.find(params[:recipe_id])
-    @foods = Food.all.where(user_id: current_user.id)
-  end
-
   def create
     @recipe_food = RecipeFood.new(recipe_food_params)
     @recipe = Recipe.find(params[:recipe_food][:recipe_id])
