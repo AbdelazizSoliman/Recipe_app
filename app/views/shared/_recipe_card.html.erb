@@ -1,16 +1,15 @@
-<div class="border-2 border-black flex gap-[5%] p-[3%] relative min-h-[140px]">
-  <div>
-    <h2 class="text-xl font-extrabold"><%= recipe.name %></h2>
-    <% if recipe.user == current_user %>
-      <%= form_tag(remove_recipe_path(recipe), method: :delete) do %>
-        <%= submit_tag 'Remove', class: 'btn btn-danger btn-sm' %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="w-[65%]">
-    <p><%= recipe.description %></p>
-  </div>
-  <a href="<%= recipe_path(recipe.id) %>" id="<%= recipe.id %>"  class="mt-5 pt-1">Details</a>
+<a href="<%= recipe_path(recipe.id) %>" id="<%= recipe.id %>"  class="text-decoration-none">
+<div class="row border border-2 mb-4">
+      <div class="col-4 py-3 ps-4 text-start">
+              <% if recipe.user == current_user %>
+                <%= link_to recipe.name, recipe_path(recipe), class: 'nav-link mb-3 fs-4 link-dark'%>
+                  <%= button_to "Remove", remove_recipe_path(recipe), class: "btn btn-danger fs-5 p-1 custom-button-width", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
+                <%end%>
+      </div>
+          <div class="col p-2 text-start">
+                <p><%= recipe.description %></p>
+        </div>
 </div>
 
+</a>
 
