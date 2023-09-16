@@ -61,7 +61,7 @@ RSpec.describe Recipe, type: :model do
   end
 
 
- 
+
 
   it 'is not valid with a preparation time less than 1' do
     recipe.preparation_time = 0

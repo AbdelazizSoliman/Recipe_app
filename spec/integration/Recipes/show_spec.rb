@@ -4,7 +4,6 @@
 require 'rails_helper'
 
 RSpec.describe 'recipes/show.html.erb', type: :feature do
-
   it 'displays the recipe' do
     visit recipe_path(@recipe)
 
