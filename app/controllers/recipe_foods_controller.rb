@@ -1,10 +1,4 @@
 class RecipeFoodsController < ApplicationController
-  def new
-    @recipe = Recipe.find(params[:recipe_id])
-    @foods = Food.where(user_id: current_user.id)
-    @recipe_food = RecipeFood.new
-  end
-
   def index; end
 
   def show; end

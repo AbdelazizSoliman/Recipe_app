@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   # before_action :authenticate_user!, except: [:show]
+  include RecipesHelper
 
   def index
     @recipes = Recipe.includes(:recipe_foods).where(user_id: current_user.id)
@@ -67,19 +68,6 @@ class RecipesController < ApplicationController
     @recipe.update(public: !@recipe.public)
     flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
     redirect_to recipe_path(@recipe)
-  end
-
-  def toggle_recipe_public
-    @recipe = Recipe.find(params[:id])
-
-    if @recipe.user == current_user
-      @recipe.update(public: !@recipe.public)
-      flash[:notice] = @recipe.public ? 'Recipe is now public.' : 'Recipe is now private.'
-    else
-      flash[:alert] = 'You do not have permission to toggle this recipe.'
-    end
-
-    redirect_to @recipe
   end
 
   def generate_shopping_list

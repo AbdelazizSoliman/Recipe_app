@@ -20,12 +20,12 @@
         </span>
         <% if can? :manage, @recipe %>
           <div data-controller="recipe" class="form-check form-switch form-check-reverse">
-            <%= form_with(model: @recipe) do |form| %>
-              <%= form.check_box :public, class: "form-check-input",
-                                  checked: @recipe.public,
-                                  data: { id: @recipe.id, action: "recipe#toggle_public" } %>
-              <label class="form-check-label" for="toggle">Public</label>
-            <% end %>
+          <%= form_with(model: @recipe) do |form| %>
+            <%= form.check_box :public, class: "form-check-input",
+                              checked: @recipe.public?,
+                              id: "public_toggle_checkbox" %>
+            <label class="form-check-label" for="public_toggle_checkbox">Public</label>
+          <% end %>
           </div>
         <% end %>
       </div>

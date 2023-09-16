@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
       member do
         delete :destroy
-        patch :toggle_recipe_public
+        post :toggle_public
         get 'add_ingredient', to: 'recipes#add_ingredient'
         post 'add_ingredient', to: 'recipes#add_ingredient'
         get 'generate_shopping_list', to: 'recipes#generate_shopping_list'
