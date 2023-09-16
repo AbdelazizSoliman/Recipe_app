@@ -3,7 +3,7 @@ require_relative '../rails_helper'
 RSpec.describe 'Recipe', type: :system do
   # Create some test users and their associated data
   before do
-    @user1 = User.create!(name: 'Christian Momo', email: 'mm@recipapp.com', password: '123456', role: 'admin')
+    @user1 = User.create!(name: 'Peter Dumbari', email: 'mm@recipapp.com', password: '123456', role: 'admin')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
 
     @recipe1 = @user1.recipes.create!(name: 'recipe 1', description: 'recipe 1 description', cooking_time: 10,

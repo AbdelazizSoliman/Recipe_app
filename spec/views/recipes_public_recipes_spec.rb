@@ -3,7 +3,7 @@ require_relative '../rails_helper'
 RSpec.describe 'Recipe', type: :system do
   # Create some test users and their associated data
   before do
-    @user1 = User.create!(name: 'Christian Momo', email: 'mm@recipapp.com', password: '123456')
+    @user1 = User.create!(name: 'Peter', email: 'mm@recipapp.com', password: '123456')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
 
     @recipe1 = @user1.recipes.create!(name: 'recipe 1', description: 'recipe 1 description', cooking_time: 10,
@@ -17,7 +17,7 @@ RSpec.describe 'Recipe', type: :system do
     visit public_recipes_path
 
     expect(page).to have_content('recipe 1')
-    expect(page).to have_content('Christian Momo')
+    expect(page).to have_content('Peter')
     expect(page).to have_content(1)
     expect(page).to have_content(50.0)
   end
