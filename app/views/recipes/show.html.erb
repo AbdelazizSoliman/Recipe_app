@@ -25,18 +25,32 @@
   <% if current_user == @recipe.user %>      
       <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
     <% end %>
-  </div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Measurement Unit</th>
-      <th>Price</th>
-      <th>Action</th> <!-- Add an Action column -->
-    </tr>
-  </thead>
+    </div>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Value</th>
+            <th>Action</th> <!-- Add an Action column -->
+          </tr>
+      </thead>
+      <tbody>
+        <% @recipe_foods.each do |recipe_food| %>                        
+          <tr>
+              <td><%= Food.find_by(id: recipe_food.food_id).name %></td>
+                <td><%= recipe_food.quantity %></td>
+                <td><%= Food.find_by(id: recipe_food.food_id).price * recipe_food.quantity %></td>
+                <td>
+                  <div class="md:flex justify-between px-3">
+                  <a href="#" class="font-medium text-blue-600 underline hover:no-underline">Modify</a>
+                  <%= link_to 'Remove', recipe_food_path(@recipe.id, Food.find_by(id: recipe_food.food_id).id), class: "font-medium text-blue-600 underline hover:no-underline", data: { "turbo-method": :delete } %>
+                  </div>
+                </td>
+              </tr>
+        <% end %>
+      </tbody>
 
-</table>
+  </table>
 </div>
 <%= link_to 'Back to Recipes', recipes_path %>

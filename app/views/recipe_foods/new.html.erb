@@ -1,0 +1,7 @@
+<div class="w-full md:w-[50%] mx-auto gap-5">
+  <%= form_with model: [@recipe, @recipe_food], url: recipe_recipe_foods_path(@recipe), method: :post do |form| %>
+    <%= form.collection_select :food_id, @foods, :id, :name, prompt: 'Select a food' %>
+    <%= form.number_field :quantity, placeholder: 'Enter quantity', class: "mt-5" %>
+    <%= form.submit 'Add Food', class: "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 mt-5" %>
+  <% end %>
+</div>
