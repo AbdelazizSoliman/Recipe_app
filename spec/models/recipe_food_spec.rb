@@ -24,7 +24,6 @@ RSpec.describe RecipeFood, type: :model do
   end
 
   describe 'validations' do
-
     it 'validates presence of recipe' do
       recipe_food = RecipeFood.new
       expect(recipe_food.valid?).to be_falsey

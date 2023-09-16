@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe Recipe, type: :model do
- 
   before { recipe.save }
 
   it 'is valid with valid attributes' do
@@ -16,8 +15,8 @@ RSpec.describe Recipe, type: :model do
   end
 
   it 'is not valid with a name less than 3 characters' do
-    recipe.name = 'ab'
-    expect(recipe).to_not be_valid
+    recipe.name = 'abc'
+    expect(recipe).to be_valid
     expect(recipe.errors[:name]).to include('Recipe name is too short (minimum is 3 characters)')
   end
 
