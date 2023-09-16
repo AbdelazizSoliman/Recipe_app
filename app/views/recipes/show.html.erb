@@ -1,42 +1,97 @@
-<%= render partial: 'shared/navbar' %>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-8 mt-4 p-2">
+      <h1 class="text-center">
+        <%= @recipe.name %>
+      </h1>
+      
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+      <% end %>
 
-<div class="recipe-show-page">
-  <div class="recipe-header">
-    <h2><%= @recipe.name %></h2>
-    <div class="top-line">
-      <p>Preparation Time: <%= @recipe.preparation_time %> minutes</p>
-      <p>
-        <% if current_user == @recipe.user %>
-          <% if @recipe.public %>
-            <%= link_to 'Make Private', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
-          <% else %>
-            <%= link_to 'Make Public', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
-          <% end %>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span>
+          Preparation Time:
+          <%= @recipe.preparation_time %>
+          <%= @recipe.preparation_time > 1 ? 'hours' : 'hour' %> 
+        </span>
+        <% if can? :manage, @recipe %>
+          <div data-controller="recipe" class="form-check form-switch form-check-reverse">
+            <%= form_with(model: @recipe) do |form| %>
+              <%= form.check_box :public, class: "form-check-input",
+                                  checked: @recipe.public,
+                                  data: { id: @recipe.id, action: "recipe#toggle_public" } %>
+              <label class="form-check-label" for="toggle">Public</label>
+            <% end %>
+          </div>
         <% end %>
-      </p>
+      </div>
+
+      <span class="d-block mb-3">
+        Cooking Time:
+        <%= @recipe.cooking_time %>
+        <%= @recipe.cooking_time > 1 ? 'hours' : 'hour' %>
+      </span>
+      <span class="steps">Steps goes here...</span>
+
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="add-btn">
+          <%= link_to 'Generate Shopping List', shopping_list_path %>
+        </div>
+        <% if can? :manage, @recipe %>
+          <div class="add-btn">
+            <%= link_to 'Add ingredient', new_recipe_recipe_food_path(recipe_id: @recipe.id), class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+
+      <hr/>
+      <% if @recipe.recipe_foods.empty? %>
+        <p class="no-record text-center">
+          No food ingredient added to this recipe yet.
+        </p>
+      <% end %>
+
+      <% if @recipe.recipe_foods.any? %>
+        <table class="table table-striped table-bordered mt-2">
+					<thead>
+						<tr>
+						  <th scope="col">#</th>
+							<th scope="col">Food</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Value</th>
+							<th scope="col" class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+            <% @recipe.recipe_foods.each_with_index do |food_recipe, index| %>
+              <tr>
+                <td><%= index + 1 %></td>										
+                <td><%=food_recipe.food.name %></td>
+                <td>
+                  <%= food_recipe.quantity.to_i %>
+                  <%= food_recipe.food.measurement_unit %>
+                </td>
+                <td>
+                  <% if food_recipe.quantity.present? && food_recipe.food.price.present? %>
+                      $<%= food_recipe.quantity * food_recipe.food.price %>
+                  <% else %>
+                    N/A
+                  <% end %>
+                </td>
+                <td class="d-flex justify-content-center justify-content-around">
+                  <% if can? :manage, @recipe %>
+                    <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, food_recipe), class: 'btn btn-danger btn-sm' %>
+                    <%= button_to "Remove", recipe_recipe_food_path(@recipe, food_recipe), class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
+                  <% else %>
+                    NA
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+			  </table>
+      <% end %>
     </div>
   </div>
-  <p>Cooking Time: <%= @recipe.cooking_time %> minutes</p>
-  <p>Description: <%= @recipe.description %></p>
-
-  <h3>Required Food Items</h3>
-  <div class="recipe-show-button-container">
-  <%= link_to 'Generate shopping list', shopping_list_path %>
-  <% if current_user == @recipe.user %>      
-      <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Measurement Unit</th>
-      <th>Price</th>
-      <th>Action</th> <!-- Add an Action column -->
-    </tr>
-  </thead>
-
-</table>
 </div>
-<%= link_to 'Back to Recipes', recipes_path %>
