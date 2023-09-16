@@ -1,0 +1,32 @@
+<%= render partial: "shared/navbar"%>
+
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <h1 class="text-center">Shopping list</h1>
+            <div class="d-flex justify-content-between mt-5">
+            <p>Amount of food to buy: <span class="fw-bold"><%= @shopping_list.length %></span></p>
+            <p>Total value of food needed: <span class="fw-bold"><%= @total_price %></span></p>
+            </div>
+            <table class="table table-primary table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% @shopping_list.each do |shopping_list_item| %>
+                    <tr>
+                    <td><%= shopping_list_item[:food] %></td>
+                    <td><%= "#{shopping_list_item[:quantity]} #{shopping_list_item[:unit]}" %></td>
+                    <td><%= "#{shopping_list_item[:unit_price] * shopping_list_item[:quantity]} $" %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

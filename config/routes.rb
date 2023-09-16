@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :foods, only: [:index, :new, :create]
       delete 'foods/:id', to: 'foods#destroy', as: 'delete_food'
+      
   
   resources :recipes, only: [:index, :new, :show, :create, :update, :destroy] do
     resources :recipe_foods, only: [:index, :show, :new, :create]
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
   
-  root 'pages#home'
+  root 'recipes#index'
   resources :users, only: [:show, :edit]
   post '/recipe/:id/toggle_public', to: 'recipes#toggle_public', as: 'toggle_public'
 end

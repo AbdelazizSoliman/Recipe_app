@@ -58,6 +58,9 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
+    @recipe_foods = @recipe.recipe_foods # or whatever logic you use to fetch associated recipe foods
+
+    @recipe = Recipe.find(params[:id])
     @toggle_recipe_public = params[:toggle_recipe_public]
     return unless @toggle_recipe_public && @recipe.user == current_user
 
