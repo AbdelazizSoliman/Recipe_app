@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <%= render partial: "shared/navbar"%>
+
+    <div class="container mt-5"> 
+    <div class="row">
+        <div class="col-10 offset-1">
+
+        <div class="text-align-left">
+            <a href=<%= new_food_path %> id="add-food-link" class="bg-dark bg-gradient text-info float-end mb-3 p-2 text-decoration-none">Add Food</a>
+        <div>
+
+        <div class="table">
+                <table class="table table-primary table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Measurement Unit</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% @foods.each do |food| %>
+                        <tr>
+                        <td><%= food.name %></td>
+                        <td><%= food.measurement_unit %></td>
+                        <td><%= food.price %></td>
+                        <td><%= food.quantity %></td>
+                        <td>
+                        <%=  button_to 'Delete', delete_food_path(food.id),class: ' btn btn-danger btn-sm border-none text-white', method: :delete %>
+                        </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
