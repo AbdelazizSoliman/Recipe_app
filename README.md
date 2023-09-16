@@ -31,7 +31,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 Blog app <a name="about-project"></a>
+# 📖 Recipe Application <a name="about-project"></a>
 
 **Recipe App** is project built with Rails and it's basically simple CRUD website, it has some features, such add creating, reading, updating and deleting features.
 
@@ -87,7 +87,8 @@ Clone this repository to your desired folder:
 
 ```sh
   cd my-folder
-  git clone https://github.com/husush23/Blog-App.git
+  git clone https://github.com/AbdelazizSoliman/Recipe_app.git
+
 ```
 
 ### Install
@@ -125,7 +126,7 @@ To run tests, run the following command:
 - For testig run the following:
 
 ```sh
-  bundle exec rspec
+  rspec
 ```
 
 ### Deployment
@@ -142,11 +143,17 @@ You can deploy this project using:
 
 👤 **Author1**
 
-👤 **Hussein Hashi**
+👤 **Abdelaziz Soliman**
 
-- GitHub: [Husush23](https://github.com/husush23)
-- Twitter: [Hussein](https://twitter.com/HusseinKadare2)
-- LinkedIn: [Hussein](https://www.linkedin.com/in/hussein-kadare-8aa1361a8/)
+- GitHub: [Abdelaziz](https://github.com/AbdelazizSoliman)
+- LinkedIn: [Abdelaziz](https://www.linkedin.com/in/abdelaziz-soliman-16989b89/)
+
+👤 **Author2**
+
+👤 **Peter Dumbari**
+
+- GitHub: [PeterDumbari](https://github.com/peterdumbari)
+- LinkedIn: [Peter](https://www.linkedin.com/in/peterdumbari)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -154,9 +161,7 @@ You can deploy this project using:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **Single page app**
-- **Complete webApp**
-- **Smooth functionality(design)**
+- **Updating Recipes**
 
 <!-- CONTRIBUTING -->
 
@@ -164,7 +169,7 @@ You can deploy this project using:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/husush23/Blog-App/issues).
+Feel free to check the [issues page](https://github.com/AbdelazizSoliman/Recipe_app/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
