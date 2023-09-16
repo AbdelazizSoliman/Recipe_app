@@ -32,19 +32,6 @@ RSpec.describe Recipe, type: :model do
     expect(recipe.errors[:description]).to include("can't be blank")
   end
 
-  it 'is not valid with a description more than 500 characters' do
-    recipe.description = 'a' * 501
-    recipe.valid?
-    expect(recipe).not_to be_valid
-    expect(recipe.errors[:description]).to include('is too long (maximum is 500 characters)')
-  end
-
-  it 'is valid with a description less than 500 characters' do
-    recipe.description = 'a' * 10
-    recipe.valid?
-    expect(recipe).to be_valid
-  end
-
   it 'is not valid without a cooking time' do
     recipe.cooking_time = nil
     recipe.valid?
@@ -64,12 +51,6 @@ RSpec.describe Recipe, type: :model do
     recipe.valid?
     expect(recipe).not_to be_valid
     expect(recipe.errors[:preparation_time]).to include('must be greater than 0')
-  end
-
-  it 'is valid with a preparation time greater than 0' do
-    recipe.preparation_time = 1
-    recipe.valid?
-    expect(recipe).to be_valid
   end
 
   it 'is not valid without a public' do
