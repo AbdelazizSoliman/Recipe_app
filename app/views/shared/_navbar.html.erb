@@ -16,6 +16,9 @@
       <li class="nav-item">
       <a href=" <%= public_recipes_path %>" class="nav-link">Public Recipes</a>
       </li>
+       <li class="nav-item">
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "nav-link" %>
+          </li>
     </ul>
   </div>
 </div>

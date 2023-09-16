@@ -24,4 +24,5 @@ Rails.application.routes.draw do
   
   root 'recipes#index'
   resources :users, only: [:show, :edit]
+  post '/recipe/:id/toggle_public', to: 'recipes#toggle_public', as: 'toggle_public'
 end

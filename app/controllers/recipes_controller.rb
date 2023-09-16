@@ -9,24 +9,18 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new
   end
 
-  def add_ingredient
+  def toggle_public
     @recipe = Recipe.find(params[:id])
-
-    if current_user == @recipe.user
-      @foods_not_in_recipe = Food.where.not(id: @recipe.foods.pluck(:id))
-
-      if params[:recipe].present? && params[:recipe][:food_ids].present?
-        food_ids = params[:recipe][:food_ids].reject(&:empty?) # Remove empty strings
-        @recipe.foods << Food.where(id: food_ids)
-        flash[:notice] = 'Ingredients added successfully.'
-        redirect_to @recipe
-        return
+    @recipe.toggle!(:public)
+    respond_to do |format|
+      if @recipe.save
+        format.html { redirect_to recipes_path, notice: 'Recipe was successfully updated.' }
+        format.json { render :show, status: :created, location: @recipe }
+      else
+        format.html { redirect_to recipes_path, alert: 'Recipe was not updated.' }
+        format.json { render json: @recipe.errors, status: unprocessable_entity }
       end
-    else
-      flash[:alert] = 'You do not have permission to add ingredients to this recipe.'
     end
-
-    render 'add_ingredient'
   end
 
   def remove_food_from_recipe

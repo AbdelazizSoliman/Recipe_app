@@ -1,7 +1,24 @@
-<div class="w-full md:w-[50%] mx-auto gap-5">
-  <%= form_with model: [@recipe, @recipe_food], url: recipe_recipe_foods_path(@recipe), method: :post do |form| %>
-    <%= form.collection_select :food_id, @foods, :id, :name, prompt: 'Select a food' %>
-    <%= form.number_field :quantity, placeholder: 'Enter quantity', class: "mt-5" %>
-    <%= form.submit 'Add Food', class: "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 mt-5" %>
-  <% end %>
+
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-4 mt-5 p-2 border shadow-lg bg-white rounded">
+      <h4 class="text-center"><%= @recipe.name %></h4>
+      <h5 class="text-center">
+          Add Ingredient
+      </h5>
+
+      <% unless @foods.empty? %>
+        <%= render 'new' %>
+      <% else %>
+        <p class="text-center mt-4">
+          No foods available. Please add a food first. <br>
+          <%= link_to 'Add a Food', new_food_path, data: { turbo_frame: "remote_modal" } %>
+        </p>
+        <div class="actions text-end mt-4">
+          <%= link_to 'Cancel', recipe_path(@recipe), class: "btn btn-dark btn-sm px-3" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
 </div>
